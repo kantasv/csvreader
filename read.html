@@ -8,6 +8,7 @@
 
 <body>
     <p>*Only accepts CSV files with no commas in a cell.</p>
+    <button id='importButton'>import CSV</button>
     <input type="file" id='filepicker'>
 </body>
 <script>
@@ -59,6 +60,11 @@
         console.log(fileInfo)
 
     }
+
+    // EventListeners
+    document.querySelector('#importButton').addEventListener('click', () => {
+        filepicker.click()
+    }, false)
     filepicker.addEventListener('change', onFilepikerChange, false)
 
     //DOM operations
@@ -87,8 +93,8 @@
                     aTagElm.setAttribute('href', elm)
                     aTagElm.setAttribute('target', '_blank')
                     tdElm.append(aTagElm)
-                }else{
-                    tdElm.innerText=elm
+                } else {
+                    tdElm.innerText = elm
                 }
 
                 trElm.append(tdElm)
@@ -116,6 +122,10 @@
     tr {
         border-collapse: collapse;
         border: 1px solid #333;
+    }
+
+    #filepicker {
+        visibility: hidden;
     }
 </style>
 
