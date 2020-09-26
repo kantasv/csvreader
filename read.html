@@ -27,17 +27,31 @@
             reader.onload = (e) => {
                 let result = e.target.result
                 let regex_commaBetweenDQ = new RegExp('".*?,.*?"', 'g');
-                let commaExists=result.match(regex_commaBetweenDQ).length>0
-                if(commaExists){
+
+                let commaExists = () => {
+                    if (result.match(regex_commaBetweenDQ)) {
+                        if (result.match(regex_commaBetweenDQ).length > 0) {
+                            return true
+                        } else {
+                            return false
+                        }
+                    } else {
+                        return false
+                    }
+                }
+
+                if (commaExists()) {
                     alert("A CSV file with comma in a cell cannot be opened.")
-                }else{
+                } else {
+                    let rows_2D = []
+                    let rawRows = result.split('\n')
+                    rawRows.forEach(row => {
+                        let rowElms = row.split(",")
+                        rows_2D.push(rowElms)
+                    })
+
 
                 }
-                /*
-                let rawRows = result.split('\n')
-                rawRows.forEach(row=>{
-                })
-                */
             }
         }
 
