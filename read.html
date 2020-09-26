@@ -16,8 +16,8 @@
     let onFilepikerChange = (e) => {
 
         let file = event.target.files[0];
-        let type = file.type; // MIMEタイプ
-        let size = file.size; // ファイル容量（byte）
+        let type = file.type
+        let size = file.size
         let fileInfo = `file type:${type}, ${size}byte`
 
         if (type != 'text/csv') {
@@ -44,6 +44,7 @@
                 if (commaExists()) {
                     alert("A CSV file with comma in a cell cannot be opened.")
                 } else {
+                    //parses CSV files into a two-dimensional array
                     let rows_2D = []
                     let rawRows = result.split('\n')
                     rawRows.forEach(row => {
@@ -65,9 +66,9 @@
     document.body.append(tableElm)
 
 
-    let shotenURL = url => {
-        if (url.length > 100) {
-            let shorterURL = url.substring(0, 100) + '...' + url.substring(url.length - 50, url.length)
+    let shortenURL = url => {
+        if (url.length > 30) {
+            let shorterURL = url.substring(0, 50) + '...' + url.substring(url.length - 10, url.length)
             return shorterURL
         } else {
             return url
@@ -80,7 +81,16 @@
             let trElm = document.createElement('tr')
             row.forEach(elm => {
                 let tdElm = document.createElement('td')
-                tdElm.innerText = shotenURL(elm)
+                if (elm.indexOf('http') != -1) {
+                    let aTagElm = document.createElement('a')
+                    aTagElm.innerText = shortenURL(elm)
+                    aTagElm.setAttribute('href', elm)
+                    aTagElm.setAttribute('target', '_blank')
+                    tdElm.append(aTagElm)
+                }else{
+                    tdElm.innerHTML=elm
+                }
+
                 trElm.append(tdElm)
             })
             tableElm.append(trElm)
@@ -94,6 +104,7 @@
 <style>
     table tr {
         padding: 5px;
+        font-size: 10px;
     }
 
     table td {
