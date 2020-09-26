@@ -11,6 +11,7 @@
     <input type="file" id='filepicker'>
 </body>
 <script>
+    //Filepicker operations
     let filepicker = document.querySelector('#filepicker')
     let onFilepikerChange = (e) => {
 
@@ -49,8 +50,7 @@
                         let rowElms = row.split(",")
                         rows_2D.push(rowElms)
                     })
-
-
+                    drawCSV(rows_2D)
                 }
             }
         }
@@ -59,6 +59,53 @@
 
     }
     filepicker.addEventListener('change', onFilepikerChange, false)
+
+    //DOM operations
+    let tableElm = document.createElement('table')
+    document.body.append(tableElm)
+
+
+    let shotenURL = url => {
+        if (url.length > 100) {
+            let shorterURL = url.substring(0, 100) + '...' + url.substring(url.length - 50, url.length)
+            return shorterURL
+        } else {
+            return url
+        }
+    }
+
+
+    let drawCSV = array_2D => {
+        array_2D.forEach(row => {
+            let trElm = document.createElement('tr')
+            row.forEach(elm => {
+                let tdElm = document.createElement('td')
+                tdElm.innerText = shotenURL(elm)
+                trElm.append(tdElm)
+            })
+            tableElm.append(trElm)
+        })
+
+    }
+
+
+
 </script>
+<style>
+    table tr {
+        padding: 5px;
+    }
+
+    table td {
+        padding: 5px;
+    }
+
+    table,
+    td,
+    tr {
+        border-collapse: collapse;
+        border: 1px solid #333;
+    }
+</style>
 
 </html>
