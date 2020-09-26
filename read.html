@@ -10,6 +10,7 @@
     <p>*Only accepts CSV files with no commas in a cell.</p>
     <button id='importButton'>import CSV</button>
     <input type="file" id='filepicker'>
+    <p id="fileInfo"></p>
 </body>
 <script>
     //Filepicker operations
@@ -19,7 +20,8 @@
         let file = event.target.files[0];
         let type = file.type
         let size = file.size
-        let fileInfo = `file type:${type}, ${size}byte`
+        let name = file.name
+        let fileInfo = `file name:${name}, type:${type}, size:${size}byte,`
 
         if (type != 'text/csv') {
             alert('invalid file format')
@@ -58,6 +60,7 @@
         }
 
         console.log(fileInfo)
+        document.querySelector('#fileInfo').innerText = fileInfo
 
     }
 
