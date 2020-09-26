@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <p>*Only accepts CSV files with no commas in a cell.</p>
+    <input type="file" id='filepicker'>
+</body>
+<script>
+    let filepicker = document.querySelector('#filepicker')
+    let onFilepikerChange = (e) => {
+
+        let file = event.target.files[0];
+        let type = file.type; // MIMEタイプ
+        let size = file.size; // ファイル容量（byte）
+        let fileInfo = `file type:${type}, ${size}byte`
+
+        if (type != 'text/csv') {
+            alert('invalid file format')
+        } else {
+            let reader = new FileReader()
+            reader.readAsText(file)
+            reader.onload = (e) => {
+                let result = e.target.result
+                let regex_commaBetweenDQ = new RegExp('".*?,.*?"', 'g');
+                let commaExists=result.match(regex_commaBetweenDQ).length>0
+                if(commaExists){
+                    alert("A CSV file with comma in a cell cannot be opened.")
+                }else{
+
+                }
+                /*
+                let rawRows = result.split('\n')
+                rawRows.forEach(row=>{
+                })
+                */
+            }
+        }
+
+        console.log(fileInfo)
+
+    }
+    filepicker.addEventListener('change', onFilepikerChange, false)
+</script>
+
+</html>
